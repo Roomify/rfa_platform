@@ -34,6 +34,9 @@ hooks:
     deploy: |
         cd public
         drush -y updatedb
+        drush composer-json-rebuild
+        cd sites/default/files/composer
+        composer -n install
 # The processes that are triggered on a schedule.
 crons:
     drupal:
