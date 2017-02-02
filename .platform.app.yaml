@@ -1,0 +1,41 @@
+# The unique identifier of the application.
+name: php
+# The language that will run your application.
+type: php:7.0
+# The way to build your application.
+build:
+    flavor: drupal
+# The way services are mapped within your application.
+relationships:
+    database: "database:mysql"
+    # solr: "solr:solr"
+    # redis: "redis:redis"
+# The way your application is exposed to the web.
+web:
+    locations:
+        "/":
+            root: "public"
+            expires: -1
+            passthru: "/index.php"
+            index:
+                - index.php
+            allow: true
+# The size of the persistent disk size of your application in MB.
+disk: 2048
+
+# The volumes that are mounted under a writable shared resource.
+mounts:
+    "/public/sites/default/files": "shared:files/files"
+    "/tmp": "shared:files/tmp"
+    "/private": "shared:files/private"
+# The shell commands to run during the build or deployment process.
+hooks:
+    # We run deploy hook after your application has been deployed and started.
+    deploy: |
+        cd public
+        drush -y updatedb
+# The processes that are triggered on a schedule.
+crons:
+    drupal:
+        spec: "*/20 * * * *"
+        cmd: "cd public ; drush core-cron"
