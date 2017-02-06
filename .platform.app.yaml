@@ -28,6 +28,7 @@ mounts:
     "/public/sites/default/files": "shared:files/files"
     "/tmp": "shared:files/tmp"
     "/private": "shared:files/private"
+    "/drush-backups": "shared:files/drush-backups"
 # The shell commands to run during the build or deployment process.
 hooks:
     # We run deploy hook after your application has been deployed and started.
