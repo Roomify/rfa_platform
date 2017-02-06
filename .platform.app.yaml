@@ -1,5 +1,5 @@
 # The unique identifier of the application.
-name: php
+name: app
 # The language that will run your application.
 type: php:7.0
 # The way to build your application.
