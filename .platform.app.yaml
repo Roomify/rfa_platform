@@ -1,10 +1,13 @@
 # The unique identifier of the application.
 name: app
+
 # The language that will run your application.
 type: php:7.0
+
 # The way to build your application.
 build:
     flavor: drupal
+
 # The way services are mapped within your application.
 relationships:
     database: "database:mysql"
@@ -71,6 +74,7 @@ mounts:
     "/tmp": "shared:files/tmp"
     "/private": "shared:files/private"
     "/drush-backups": "shared:files/drush-backups"
+
 # The shell commands to run during the build or deployment process.
 hooks:
     # We run deploy hook after your application has been deployed and started.
@@ -80,6 +84,7 @@ hooks:
         drush composer-json-rebuild
         cd sites/default/files/composer
         composer -n install
+
 # The processes that are triggered on a schedule.
 crons:
     drupal:
