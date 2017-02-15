@@ -8,4 +8,4 @@ includes[] = drupal-org-core.make
 projects[roomify][type] = profile
 projects[roomify][download][type] = git
 projects[roomify][download][url] = "https://github.com/Roomify/RfA.git"
-projects[roomify][download][tag] = 1.3.1
+projects[roomify][download][tag] = 1.3.2
