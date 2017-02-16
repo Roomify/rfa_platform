@@ -82,9 +82,15 @@ hooks:
         # Install RfA if it has not been installed.
         set -e
         cd ~/public
-        if [ ! -f public/.platform.installed ]; then
+        TABLE_COUNT=$( drush sqlq 'SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = database();' )
+        if [ "${TABLE_COUNT}" = "0" ]; then
             php -d memory_limit=-1 /app/.global/vendor/drush/drush/drush.php --yes site-install roomify roomify_install_welcome.roomify_product=accommodations --account-name=admin --account-pass=admin --site-mail=webmaster@roomify.us --site-name="Roomify for Accommodations"
-            touch public/.platform.installed
+            # Install multi-property content.
+            php -d memory_limit=-1 /app/.global/vendor/drush/drush/drush.php eval '$return = roomify_accommodation_example_content_multi_property(); print_r($return);'
+            # Set error_level.
+            drush -y vset error_level 0
+            # Prime the cache.
+            curl -s http://localhost/ >/dev/null
         fi
         drush -y updatedb
         drush composer-json-rebuild
