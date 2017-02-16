@@ -79,7 +79,13 @@ mounts:
 hooks:
     # We run deploy hook after your application has been deployed and started.
     deploy: |
-        cd public
+        # Install RfA if it has not been installed.
+        set -e
+        cd ~/public
+        if [ ! -f public/.platform.installed ]; then
+            php -d memory_limit=-1 /app/.global/vendor/drush/drush/drush.php --yes site-install roomify roomify_install_welcome.roomify_product=accommodations --account-name=admin --account-pass=admin --site-mail=webmaster@roomify.us --site-name="Roomify for Accommodations"
+            touch public/.platform.installed
+        fi
         drush -y updatedb
         drush composer-json-rebuild
         cd sites/default/files/composer
